@@ -49,7 +49,7 @@
 		
 		pstmt.executeUpdate();
 		
-		ResultSet rs = pstmt.getGeneratedKeys(); //stmt1 로 시작하는 마지막 키값
+		ResultSet rs = pstmt.getGeneratedKeys();
 		int lastKey = 0;
 		if(rs.next()){
 			lastKey = rs.getInt(1);
