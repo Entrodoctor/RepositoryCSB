@@ -29,43 +29,51 @@
 </script>
 </head>
 <body>
-<form id="addForm" action="./memberAddAction.jsp" method="post">
+<form id="addForm" action="<%=request.getContextPath() %>/member/memberAddAction.jsp" method="post">
 <table>
+
 	<tr>
-		<td><label>ID : </label></td>
+		<td><label for = "id">ID : </label></td> <!-- label 안에 for 연결자로 input 태그와 이어준다고 함 -->
 		<td><input type="text" id="id" name="id"></td>
 		<td><span id="idSpan"></span></td>
 	</tr>
+	
 	<tr>
 		<td><label>PW : </label></td>
 		<td><input type="password" id="pw" name="pw"></td>
 		<td><span id="pwSpan"></span></td>
 	</tr>
+	
 	<tr>
 		<td><label>NAME : </label></td>
 		<td><input type="text" id="name" name="name"></td>
 		<td><span id="nameSpan"></span></td>
 	</tr>
+	
 	<tr>
 		<td><label>SEX : </label></td>
 		<td><input type="radio" class="sex" name="sex" value="male"> 남
 			<input type="radio" class="sex" name="sex" value="female"> 여</td>
 		<td><span id="sexSpan"></span></td>
 	</tr>
+	
 	<tr>
 		<td><label>AGE : </label></td>
 		<td><input type="text" id="age" name="age"></td>
 		<td><span id="ageSpan"></span></td>
 	</tr>
+	
 	<tr>
 		<td><label>ADDR : </label></td>
 		<td><input type="text" id="addr" name="addr"></td>
 		<td><span id="addrSpan"></span></td>
 	</tr>
+	
 	<tr>
 		<td><input type="button" id="btn" name="btn" value="입력"></td>
 		<td><span id="btnSpan"></span></td>
 	</tr>
+	
 </table>			
 </form>
 </body>

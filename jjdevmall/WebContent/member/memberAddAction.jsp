@@ -11,8 +11,9 @@
 	request.setCharacterEncoding("UTF-8");
 
 	Connection conn = null;
-	PreparedStatement pstmt = null;
+	PreparedStatement pstmt1 = null;
 	PreparedStatement pstmt2 = null;
+	ResultSet rs = null;
 
 	String id = request.getParameter("id");
 	String pw = request.getParameter("pw");
@@ -21,6 +22,7 @@
 	int age = Integer.parseInt(request.getParameter("age"));
 	String addr = request.getParameter("addr");
 	
+	//단위테스트 코드
 	System.out.println(id + "<-- id / memberAddAction.jsp");
 	System.out.println(pw + "<-- pw / memberAddAction.jsp");
 	System.out.println(name + "<-- name / memberAddAction.jsp");
@@ -40,16 +42,16 @@
 		conn.setAutoCommit(false);
 		
 		String sql1 = "INSERT INTO member (member_id, member_pw, member_name, member_sex, member_age) VALUES (?, ?, ?, ?, ?)";
-		pstmt = conn.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);
-		pstmt.setString(1, id);
-		pstmt.setString(2, pw);
-		pstmt.setString(3, name);
-		pstmt.setString(4, sex);
-		pstmt.setInt(5, age);
+		pstmt1 = conn.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);
+		pstmt1.setString(1, id);
+		pstmt1.setString(2, pw);
+		pstmt1.setString(3, name);
+		pstmt1.setString(4, sex);
+		pstmt1.setInt(5, age);
 		
-		pstmt.executeUpdate();
+		pstmt1.executeUpdate();
 		
-		ResultSet rs = pstmt.getGeneratedKeys();
+		rs = pstmt1.getGeneratedKeys();
 		int lastKey = 0;
 		if(rs.next()){
 			lastKey = rs.getInt(1);
@@ -66,6 +68,11 @@
 	}catch(Exception e){
 		conn.rollback();
 		e.printStackTrace();
+	}finally{
+		rs.close();
+		pstmt1.close();
+		pstmt2.close();
+		conn.close();
 	}
 		
 %>
