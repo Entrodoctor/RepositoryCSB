@@ -12,21 +12,17 @@
 <body>
 <table>
 	<tr>
-		<td>NO.</td>
-		<td>ID</td>
-		<td>PW</td>
-		<td>NAME</td>
-		<td>SEX</td>
-		<td>AGE</td>
+		<td>주소</td>
 	</tr>
-
 <%
 	request.setCharacterEncoding("UTF-8");
 	
 	Connection conn = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
-	String sql = "SELECT member_no, member_id, member_pw, member_name, member_sex, member_age FROM member";
+	String sql = "select * from address where member_no = ?";
+	int send_no = Integer.parseInt(request.getParameter("send_no"));
+	System.out.println(send_no);
 	
 	String url = "jdbc:mysql://localhost:3306/jjdevmall?useUnicode=true&characterEncoding=UTF8";
 	String dbUser = "root";
@@ -36,18 +32,14 @@
 	Class.forName(driver);
 	conn = DriverManager.getConnection(url, dbUser, dbPw);	
 	pstmt = conn.prepareStatement(sql);
+	pstmt.setInt(1, send_no);
 	 
 	rs = pstmt.executeQuery();
 	
 	while(rs.next()){
 %>
 	<tr>
-		<td><%=rs.getInt("member_no") %></td>
-		<td><a href="<%=request.getContextPath() %>/admin/member/memberAddress.jsp?send_no=<%= rs.getInt("member_no")%>"><%=rs.getString("member_id") %></a></td>
-		<td><%=rs.getString("member_pw") %></td>
-		<td><%=rs.getString("member_name") %></td>
-		<td><%=rs.getString("member_sex") %></td>
-		<td><%=rs.getInt("member_age") %></td>
+		<td><%=rs.getString("member_addr") %></td>
 	</tr>
 <%
 	}
