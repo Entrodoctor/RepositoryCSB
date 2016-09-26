@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cafe.jjdev.gallery.service.BoardArticleMapper">
+
+	<delete id="deleteBoardArticle">
+		DELETE
+			
+		FROM
+			board_article
+		WHERE
+			board_article_no = #{boardArticleNo}		
+	</delete>
+	
+	<select id="selectBoardArticleTotalCount" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			board_article	
+	</select>
+
+	<select id="selectBoardArticleContentByKey"
+		parameterType="int"
+		resultType="cafe.jjdev.gallery.service.BoardArticle">
+		SELECT
+			board_article_no as boardArticleNo,
+			board_article_title as boardArticleTitle,
+			board_article_content as boardArticleContent		
+		FROM
+			board_article
+		WHERE
+			board_article_no = #{boardArticleNo}			
+	</select>
+	
+	<select id="selectBoardArticleList"
+		resultType="cafe.jjdev.gallery.service.BoardArticle">
+		SELECT
+			board_article_no as boardArticleNo,
+			board_article_title as boardArticleTitle
+		FROM
+			board_article
+		ORDER BY 
+			board_article_no DESC
+		LIMIT
+			#{pageHelper.startRaw}, #{pageHelper.linePerPage}			
+	</select>
+	
+	<insert id="insertBoardArticle" parameterType="cafe.jjdev.gallery.service.BoardArticle">
+        <selectKey resultType="int" keyProperty="boardArticleNo" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+		INSERT INTO board_article(
+			board_article_title,
+			board_article_content
+		)VALUES(
+			#{boardArticleTitle},
+			#{boardArticleContent}
+		)
+	</insert>
+</mapper>
